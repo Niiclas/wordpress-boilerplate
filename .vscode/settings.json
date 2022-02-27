@@ -1,0 +1,12 @@
+{
+    "database.connections": [
+        {
+            "type": "mysql",
+            "name": "exampleuser@localhost (MySql)",
+            "host": "localhost:3306",
+            "username": "exampleuser",
+            "database": null,
+            "password": "examplepass"
+        }
+    ]
+}
