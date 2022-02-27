@@ -1,38 +1,34 @@
 <?php
-
 /**
- * Fired during plugin activation
- *
- * @link       jan-niclas-gladbach
- * @since      1.0.0
- *
- * @package    Base_Plugin
- * @subpackage Base_Plugin/includes
+ * Plugin Name:       Movie Plugin
+ * Plugin URI:        https://example.com/plugins/the-basics/
+ * Description:       Handles movie presentations.
+ * Version:           0.0.1
+ * Requires at least: 5.2
+ * Requires PHP:      7.2
+ * Author:            Jan-Niclas Gladbach
+ * Author URI:        https://author.example.com/
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Update URI:        https://example.com/my-plugin/
+ * Text Domain:       movie-plugin
+ * Domain Path:       /languages
  */
-
-/**
- * Fired during plugin activation.
- *
- * This class defines all code necessary to run during the plugin's activation.
- *
- * @since      1.0.0
- * @package    Base_Plugin
- * @subpackage Base_Plugin/includes
- * @author     Jan-Niclas Gladbach <jniclasg@googlemail.com>
- */
-class Base_Plugin_Activator
+foreach (glob(plugin_dir_path(__FILE__) . "/admin/*.php") as $filename)
 {
+    include($filename);
+}
+foreach (glob(plugin_dir_path(__FILE__) . "/widgets/*.php") as $filename)
+{
+    include $filename;
+}
+foreach (glob(plugin_dir_path(__FILE__) . "/crud/*.php") as $filename)
+{
+    include $filename;
+}
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function activate()
-	{
-		global $wpdb;
+function movie_on_activation(){
+    global $wpdb;
 
 		echo "create dbs";
 
@@ -66,5 +62,6 @@ SQL;
 
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 		dbDelta($sql);
-	}
 }
+
+register_activation_hook( __FILE__, 'movie_on_activation' );
