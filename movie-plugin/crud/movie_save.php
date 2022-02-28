@@ -4,17 +4,23 @@ add_action('admin_post_movie_save', 'movie_save');
 function movie_save()
 {
     global $wpdb;
+    var_dump($_FILES);
+    if ($_FILES['image']['name']) {
+        $file_id = media_handle_upload('image', 0);
+    }
+    var_dump($file_id);
     $table = $wpdb->prefix . "movie_entries";
     $presentation_table = $wpdb->prefix . "presentations";
     $data = array(
         'title'    => $_POST['title'],
         'text'    => $_POST['text'],
-        'url'    => $_POST['url']
+        'url'    => $_POST['url'],
+        "image" => $file_id
     );
     $format = array(
-        '%s', '%s', '%s'
+        '%s', '%s', '%s', '%s'
     );
-    
+
     $movie_id = $_POST['id'];
     if ($_POST['id']) {
         $where = ["id" => $movie_id];

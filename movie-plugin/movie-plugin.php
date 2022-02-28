@@ -46,6 +46,7 @@ function movie_on_activation()
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			created_at datetime DEFAULT CURRENT_TIMESTAMP,
 			title tinytext NOT NULL,
+			image tinytext,
 			text text NOT NULL,
 			url varchar(255) DEFAULT '' NOT NULL,
 			PRIMARY KEY  (id)

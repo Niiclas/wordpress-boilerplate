@@ -19,6 +19,9 @@ $movies = $wpdb->get_results(
         <h4><?= $movie->title; ?></h4>
         <div><?= $movie->text; ?></div>
         <div class="wp-block-movie-url"><?= $movie->url; ?></div>
+        <?php if ($movie->image) { ?>
+            <img src="<?= wp_get_attachment_image_src($movie->image)[0]; ?>" />
+        <?php } ?>
         <?php foreach (explode(',', $movie->presentations) as $presentation) { ?>
             <div class="wp-block-movie-presentation"><?= $presentation; ?></div>
         <?php } ?>

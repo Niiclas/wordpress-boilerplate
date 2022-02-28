@@ -37,7 +37,7 @@ SQL,
         <?php } else { ?>
             <h3>Add a new Movie</h3>
         <?php } ?>
-        <form action="<?= admin_url('admin-post.php') ?>" method="post">
+        <form action="<?= admin_url('admin-post.php') ?>" method="post" enctype="multipart/form-data">
             <input type="hidden" name="action" value="movie_save" />
             <input type="hidden" name="id" value="<?= $movie->id; ?>" />
             <p>
@@ -53,6 +53,13 @@ SQL,
             <p>
                 <label> Url <br />
                     <input type="text" name="url" value="<?= $movie->url; ?>" size="55" /></label>
+            </p>
+            <p>
+                <label> Image <br />
+                    <?php if ($movie->image) { ?>
+                        <img src="<?= wp_get_attachment_image_src($movie->image)[0]; ?>" />
+                    <?php } ?>
+                    <input type="file" name="image" size="55" /></label>
             </p>
             <?php for ($i = 0; $i < 10; $i++) {
                 $pres_date = null;
