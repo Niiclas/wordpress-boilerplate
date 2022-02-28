@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin Name:       Movie Plugin
  * Plugin URI:        https://example.com/plugins/the-basics/
@@ -14,33 +15,33 @@
  * Text Domain:       movie-plugin
  * Domain Path:       /languages
  */
-foreach (glob(plugin_dir_path(__FILE__) . "/admin/*.php") as $filename)
-{
-    include($filename);
+foreach (glob(plugin_dir_path(__FILE__) . "/admin/*.php") as $filename) {
+	include($filename);
 }
-foreach (glob(plugin_dir_path(__FILE__) . "/widgets/*.php") as $filename)
-{
-    include $filename;
+foreach (glob(plugin_dir_path(__FILE__) . "/blocks/*", GLOB_ONLYDIR) as $foldername) {
+	foreach (glob($foldername . "/*.php") as $filename) {
+		include $filename;
+	}
 }
-foreach (glob(plugin_dir_path(__FILE__) . "/crud/*.php") as $filename)
-{
-    include $filename;
+foreach (glob(plugin_dir_path(__FILE__) . "/crud/*.php") as $filename) {
+	include $filename;
 }
 
-function movie_on_activation(){
-    global $wpdb;
+function movie_on_activation()
+{
+	global $wpdb;
 
-		echo "create dbs";
+	echo "create dbs";
 
-		$movie_table_name = $wpdb->prefix . "movie_entries";
-		$presentations_table_name = $wpdb->prefix . "presentations";
+	$movie_table_name = $wpdb->prefix . "movie_entries";
+	$presentations_table_name = $wpdb->prefix . "presentations";
 
-		# check https://codex.wordpress.org/Creating_Tables_with_Plugins#Creating_or_Updating_the_Table
+	# check https://codex.wordpress.org/Creating_Tables_with_Plugins#Creating_or_Updating_the_Table
 
-		$charset_collate = $wpdb->get_charset_collate();
+	$charset_collate = $wpdb->get_charset_collate();
 
-		$sql = 
-<<<SQL
+	$sql =
+		<<<SQL
 		CREATE TABLE $movie_table_name (
 			id mediumint(9) NOT NULL AUTO_INCREMENT,
 			created_at datetime DEFAULT CURRENT_TIMESTAMP,
@@ -60,8 +61,8 @@ function movie_on_activation(){
 		) $charset_collate;
 SQL;
 
-		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-		dbDelta($sql);
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	dbDelta($sql);
 }
 
-register_activation_hook( __FILE__, 'movie_on_activation' );
+register_activation_hook(__FILE__, 'movie_on_activation');

@@ -1,8 +1,0 @@
-{
-    "apiVersion": 2,
-    "title": "Movie list widget",
-    "name": "movie-plugin/movie-list-widget",
-    "category": "layout",
-    "icon": "universal-access-alt",
-    "editorScript": "file:./block.js"
-}
