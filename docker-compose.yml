@@ -29,6 +29,7 @@ services:
     profiles:
       - frontend
     restart: always
+    command: sh -c "cd movie-list-block && npm install && npm start"
     ports:
       - 7070:80
     working_dir: /home/node/blocks
