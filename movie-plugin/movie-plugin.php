@@ -26,6 +26,14 @@ foreach (glob(plugin_dir_path(__FILE__) . "/blocks/*", GLOB_ONLYDIR) as $foldern
 foreach (glob(plugin_dir_path(__FILE__) . "/crud/*.php") as $filename) {
 	include $filename;
 }
+foreach (glob(plugin_dir_path(__FILE__) . "/shortcodes/*.php") as $filename) {
+	include $filename;
+}
+
+function movie_list_load_plugin_css() {
+    wp_enqueue_style( 'style1', plugin_dir_url( __FILE__ ) . 'shortcodes/style.css' );
+}
+add_action( 'wp_enqueue_scripts', 'movie_list_load_plugin_css' );
 
 function movie_on_activation()
 {
