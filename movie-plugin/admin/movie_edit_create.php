@@ -31,7 +31,7 @@ SQL,
         $presentations = $wpdb->get_results($presentations_query);
     }
 ?>
-    <div id="primary" class="content-area">
+    <div id="movie-list-create" class="content-area">
         <?php if ($movie) { ?>
             <h3>Edit <?= $movie->title; ?> </h3>
         <?php } else { ?>

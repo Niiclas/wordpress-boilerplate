@@ -18,6 +18,13 @@
 foreach (glob(plugin_dir_path(__FILE__) . "admin/*.php") as $filename) {
 	include($filename);
 }
+foreach (glob(plugin_dir_path(__FILE__) . "admin/*.css") as $filename) {
+	add_action( 'admin_enqueue_scripts', function() use($args, $foldername, $filename) {
+		$fileinfo = pathinfo($filename);
+		$fileurl = plugin_dir_url( __FILE__ ) . "admin/" . basename($foldername) . "/" .basename($filename);
+		wp_enqueue_style( basename($foldername) . "-" . $fileinfo["filename"], $fileurl );
+	} );
+}
 foreach (glob(plugin_dir_path(__FILE__) . "blocks/*", GLOB_ONLYDIR) as $foldername) {
 	foreach (glob($foldername . "/*.php") as $filename) {
 		include $filename;
