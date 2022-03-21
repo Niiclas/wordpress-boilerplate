@@ -15,25 +15,31 @@
  * Text Domain:       movie-plugin
  * Domain Path:       /languages
  */
-foreach (glob(plugin_dir_path(__FILE__) . "/admin/*.php") as $filename) {
+foreach (glob(plugin_dir_path(__FILE__) . "admin/*.php") as $filename) {
 	include($filename);
 }
-foreach (glob(plugin_dir_path(__FILE__) . "/blocks/*", GLOB_ONLYDIR) as $foldername) {
+foreach (glob(plugin_dir_path(__FILE__) . "blocks/*", GLOB_ONLYDIR) as $foldername) {
 	foreach (glob($foldername . "/*.php") as $filename) {
 		include $filename;
 	}
 }
-foreach (glob(plugin_dir_path(__FILE__) . "/crud/*.php") as $filename) {
-	include $filename;
-}
-foreach (glob(plugin_dir_path(__FILE__) . "/shortcodes/*.php") as $filename) {
+foreach (glob(plugin_dir_path(__FILE__) . "crud/*.php") as $filename) {
 	include $filename;
 }
 
-function movie_list_load_plugin_css() {
-    wp_enqueue_style( 'style1', plugin_dir_url( __FILE__ ) . 'shortcodes/style.css' );
+foreach (glob(plugin_dir_path(__FILE__) . "shortcodes/*", GLOB_ONLYDIR) as $foldername) {
+	foreach (glob($foldername . "/*.php") as $filename) {
+		include $filename;
+	}
+	foreach (glob($foldername . "/*.css") as $filename) {
+		add_action( 'wp_enqueue_scripts', function() use($args, $foldername, $filename) {
+			$fileinfo = pathinfo($filename);
+			$fileurl = plugin_dir_url( __FILE__ ) . "shortcodes/" . basename($foldername) . "/" .basename($filename);
+			wp_enqueue_style( basename($foldername) . "-" . $fileinfo["filename"], $fileurl );
+		} );
+	}
+	
 }
-add_action( 'wp_enqueue_scripts', 'movie_list_load_plugin_css' );
 
 function movie_on_activation()
 {
